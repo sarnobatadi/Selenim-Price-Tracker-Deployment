@@ -1,10 +1,10 @@
 import time
+import os
 from selenium import  webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
 import firebase_admin
-import os
 import smtplib
 from firebase_admin import credentials
 from firebase_admin import  firestore
