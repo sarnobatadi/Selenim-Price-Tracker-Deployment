@@ -1,5 +1,5 @@
-import time
 import os
+import time
 from selenium import  webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -10,9 +10,6 @@ from firebase_admin import credentials
 from firebase_admin import  firestore
 from flask import Flask, json, jsonify, request
 from flask_cors import CORS, cross_origin
-from AmazonPriceTrack import getAmazonPrice
-from FlipkartPriceTrack import getFlipkartPrice
-from scrapper import send_mail
 app = Flask(__name__)
 CORS(app, support_credentials = True)
 
