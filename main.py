@@ -8,12 +8,12 @@ import firebase_admin
 import smtplib
 from firebase_admin import credentials
 from firebase_admin import  firestore
-
+import datetime
 
 
 cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
-import datetime
+
 
 # using now() to get current time
 current_time = datetime.datetime.now()
