@@ -210,7 +210,9 @@ def getEmail(id):
     return dt['email']
 
 
-
+while(True):
+    algo()
+    time.sleep(120)
 
 
 
