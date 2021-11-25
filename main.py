@@ -11,13 +11,15 @@ from firebase_admin import  firestore
 from flask import Flask, json, jsonify, request
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
-CORS(app, support_credentials = True)
+
+@app.route('/')
+def homePg():
+    return 'Home Page checkRoutineUpdate'
 
 @app.route('/checkRoutineUpdate', methods=["GET"])
-@cross_origin(supports_credentials = True)
 def updateDatabase():
     algo()
-    return jsonify({ 'msg' :'Updated Successfully '})
+    return 'Result is returned'
 
 
 cred = credentials.Certificate("serviceAccountKey.json")
