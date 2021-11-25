@@ -1,8 +1,8 @@
 import os
 import time
-import datetime
-from datetime import datetime
 import pytz
+from datetime import datetime as dt
+import datetime
 from selenium import  webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -16,8 +16,7 @@ cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
 
-# using now() to get current time
-current_time = datetime.datetime.now()
+
 db=firestore.client()
 
 chrome_options = webdriver.ChromeOptions()
@@ -110,14 +109,15 @@ def send_mail(url,email,price,name):
 
 
 def algo():
+    current_time = datetime.datetime.now()
     todaysDate = current_time.year*10000 + current_time.month*100 + current_time.day
     userId = []
     price = []
-    result = db.collection('users').get()
     IST = pytz.timezone('Asia/Kolkata')
-    datetime_ist = datetime.now(IST)
-    print("Last Updated at : ",
-          datetime_ist.strftime('%Y:%m:%d %H:%M:%S %Z %z'))
+    datetime_ist = dt.now(IST)
+    print("Last Updated at : ", datetime_ist.strftime('%Y:%m:%d %H:%M:%S %Z %z'))
+    result = db.collection('users').get()
+
 
 
     for res in result:
