@@ -8,6 +8,19 @@ import firebase_admin
 import smtplib
 from firebase_admin import credentials
 from firebase_admin import  firestore
+from flask import Flask, json, jsonify, request
+from flask_cors import CORS, cross_origin
+from AmazonPriceTrack import getAmazonPrice
+from FlipkartPriceTrack import getFlipkartPrice
+from scrapper import send_mail
+app = Flask(__name__)
+CORS(app, support_credentials = True)
+
+@app.route('/checkRoutineUpdate', methods=["GET"])
+@cross_origin(supports_credentials = True)
+def updateDatabase():
+    algo()
+    return jsonify({ 'msg' :'Updated Successfully '})
 
 
 cred = credentials.Certificate("serviceAccountKey.json")
@@ -209,11 +222,8 @@ def getEmail(id):
     return dt['email']
 
 
-while(1):
-    algo()
-    time.sleep(300)
-
-
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 
