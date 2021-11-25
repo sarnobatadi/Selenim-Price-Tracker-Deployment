@@ -1,5 +1,8 @@
 import os
 import time
+import datetime
+from datetime import datetime
+import pytz
 from selenium import  webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -8,8 +11,6 @@ import firebase_admin
 import smtplib
 from firebase_admin import credentials
 from firebase_admin import  firestore
-import datetime
-
 
 cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
@@ -113,6 +114,10 @@ def algo():
     userId = []
     price = []
     result = db.collection('users').get()
+    IST = pytz.timezone('Asia/Kolkata')
+    datetime_ist = datetime.now(IST)
+    print("Last Updated at : ",
+          datetime_ist.strftime('%Y:%m:%d %H:%M:%S %Z %z'))
 
 
     for res in result:
@@ -129,7 +134,7 @@ def algo():
             col = db.collection('users').document(u).collection('urlDataCollection').document(k).get()
 
             currentInfo = col.to_dict()
-            print(currentInfo)
+            #print(currentInfo)
             priceData = {
                 '0': None,
                 '1': None,
@@ -150,7 +155,7 @@ def algo():
             currentPriceSDatabase = currentInfo['currentPrice']
             if(currentInfo['type'] == 'amazon'):
                  trackres = getAmazonPrice(purl)
-                 print('Amazon!!')
+                 #print('Amazon!!')
             else:
                 trackres = getFlipkartPrice(purl)
 
@@ -159,6 +164,7 @@ def algo():
             limit = todaysDate - lastDate
 
             i = 0
+
 
             if(limit>0):
                 while(i<(8-(limit))):
@@ -171,6 +177,7 @@ def algo():
                 if(currentPriceSDatabase > newPrice):
                     priceData = currentpriceData
                     priceData['7'] = newPrice
+                    print('Price Change')
                 elif(currentPriceSDatabase < newPrice):
                     currentInfo['currentPrice'] = newPrice
                     print('Price Change')
@@ -195,10 +202,9 @@ def algo():
                     send_mail(purl, mailid, newPrice, currentInfo['productName'])
 
             db.collection('users').document(u).collection('urlDataCollection').document(k).update(currentInfo)
-            send_mail(purl, 'sarnobatadi@gmail.com', newPrice, 'Test Mail For Python Script')
             col = db.collection('users').document(u).collection('urlDataCollection').document(k).get()
-            print('New Result After Update')
-            print(col.to_dict())
+            print('New Result Updated')
+            #print(col.to_dict())
 
 
 def getEmail(id):
@@ -212,7 +218,7 @@ def getEmail(id):
 
 while(True):
     algo()
-    time.sleep(120)
+    time.sleep(3600)
 
 
 

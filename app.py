@@ -1,16 +1,7 @@
-import os
-from flask import Flask
-#from main import  algo
-app = Flask(__name__)
+import pytz
+from datetime import datetime
 
-@app.route('/')
-def homePg():
-    return 'Home Page checkRoutineUpdate'
-
-@app.route('/checkRoutineUpdate', methods=["GET"])
-def updateDatabase():
-    return 'Result is returned'
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT",5000))
-    app.run(host='0.0.0.0', port=port)
+IST = pytz.timezone('Asia/Kolkata')
+datetime_ist = datetime.now(IST)
+print("Last Updated at : ",
+      datetime_ist.strftime('%Y:%m:%d %H:%M:%S %Z %z'))
