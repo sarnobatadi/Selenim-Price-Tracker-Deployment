@@ -163,6 +163,9 @@ def algo():
                 while(i<(8-(limit))):
                     priceData[noList[i]] = currentpriceData[noList[i+limit]]
                     i = i+1
+                priceData['7'] = newPrice
+                print('New Date Updation')
+
             elif(limit == 0):
                 if(currentPriceSDatabase > newPrice):
                     priceData = currentpriceData
@@ -191,6 +194,7 @@ def algo():
                     send_mail(purl, mailid, newPrice, currentInfo['productName'])
 
             db.collection('users').document(u).collection('urlDataCollection').document(k).update(currentInfo)
+            send_mail(purl, 'sarnobatadi@gmail.com', newPrice, 'Test Mail For Python Script')
             col = db.collection('users').document(u).collection('urlDataCollection').document(k).get()
             print('New Result After Update')
             print(col.to_dict())
@@ -207,7 +211,7 @@ def getEmail(id):
 
 while(1):
     algo()
-    time.sleep(10800)
+    time.sleep(300)
 
 
 
