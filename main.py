@@ -218,7 +218,7 @@ def getEmail(id):
 
 while(True):
     algo()
-    time.sleep(3600)
+    time.sleep(1500)
 
 
 
