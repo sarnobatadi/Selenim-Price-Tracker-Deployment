@@ -54,34 +54,36 @@ def getFlipkartPrice(url):
     return res
 
 
+
 def getAmazonPrice(url):
     driver.get(url)
     search_result = driver.find_element(By.XPATH, "//span[contains(@id,'productTitle')]")
+
     try:
         product_price = driver.find_element(By.XPATH, "//span[contains(@id,'priceblock_dealprice')]")
     except NoSuchElementException:
-        product_price = driver.find_element(By.XPATH, "//span[contains(@id,'priceblock_ourprice')]")
+        try:
+            product_price = driver.find_element(By.XPATH, "//span[contains(@id,'priceblock_ourprice')]")
+        except NoSuchElementException:
+            product_price = driver.find_element(By.XPATH, "//span[contains(@id,'priceblock_saleprice')]")
 
     p_img = driver.find_element(By.XPATH, "//img[contains(@class,'a-dynamic-image ')]")
 
-
-
     product_img = p_img.get_attribute('src')
 
-    #print(product_img)
-    #print(search_result.text)
+    # print(product_img)
+    # print(search_result.text)
     price = product_price.text.replace(u'\u20B9', '')
-    price = price.replace(',','')
+    price = price.replace(',', '')
     price = (float(price))
-    #print(price)
+    # print(price)
     res = {
-        "name" : search_result.text,
+        "name": search_result.text,
         "price": price,
         "image": product_img
     }
     #print(res)
     return res
-
 
 
 
