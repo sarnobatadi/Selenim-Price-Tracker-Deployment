@@ -61,7 +61,7 @@ def getAmazonPrice(url):
         search_result = driver.find_element(By.XPATH, "//span[contains(@id,'productTitle')]")
     except NoSuchElementException:
         print(url)
-        
+
 
     try:
         product_price = driver.find_element(By.XPATH, "//span[contains(@id,'priceblock_dealprice')]")
@@ -133,12 +133,12 @@ def algo():
     for u in userId:
         userProd = []
         product = db.collection('users').document(u).collection('urlDataCollection').get()
-
+        
         for p in product:
             userProd.append(p.id)
         for k in userProd:
             col = db.collection('users').document(u).collection('urlDataCollection').document(k).get()
-
+            time.sleep(30)
             currentInfo = col.to_dict()
             #print(currentInfo)
             priceData = {
