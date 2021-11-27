@@ -57,7 +57,11 @@ def getFlipkartPrice(url):
 
 def getAmazonPrice(url):
     driver.get(url)
-    search_result = driver.find_element(By.XPATH, "//span[contains(@id,'productTitle')]")
+    try:
+        search_result = driver.find_element(By.XPATH, "//span[contains(@id,'productTitle')]")
+    except NoSuchElementException:
+        print(url)
+        
 
     try:
         product_price = driver.find_element(By.XPATH, "//span[contains(@id,'priceblock_dealprice')]")
