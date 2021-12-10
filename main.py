@@ -204,8 +204,9 @@ def algo():
                         send_mail(purl, mailid, newPrice, currentInfo['productName'])
 
                 else:
-                    mailid = getEmail(u)
-                    send_mail(purl, mailid, newPrice, currentInfo['productName'])
+                    if(currentPriceSDatabase>newPrice):
+                        mailid = getEmail(u)
+                        send_mail(purl, mailid, newPrice, currentInfo['productName'])
 
             db.collection('users').document(u).collection('urlDataCollection').document(k).update(currentInfo)
             col = db.collection('users').document(u).collection('urlDataCollection').document(k).get()
